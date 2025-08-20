@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dagteam.neurontesttask.domain.entities.UserData
 import com.dagteam.neurontesttask.domain.repositories.AccountRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted.Companion.Lazily
 import kotlinx.coroutines.flow.StateFlow
@@ -11,8 +12,10 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AccountViewModel(
+@HiltViewModel
+class AccountViewModel @Inject constructor(
     private val accountRepository: AccountRepository
 ): ViewModel() {
 

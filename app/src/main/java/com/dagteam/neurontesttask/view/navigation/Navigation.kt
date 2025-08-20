@@ -7,38 +7,32 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.dagteam.neurontesttask.NeuronApplication
+import com.dagteam.neurontesttask.view.ui.account.AccountNews
 import com.dagteam.neurontesttask.view.ui.account.AccountScreen
 import com.dagteam.neurontesttask.view.ui.account.AccountViewModel
-import com.dagteam.neurontesttask.view.ui.registration.RegistrationScreen
-import com.dagteam.neurontesttask.view.ui.registration.RegistrationViewModel
+import com.dagteam.neurontesttask.view.ui.purchases.PurchasesNews
 import com.dagteam.neurontesttask.view.ui.purchases.PurchasesScreen
 import com.dagteam.neurontesttask.view.ui.purchases.PurchasesViewModel
-import com.dagteam.neurontesttask.view.ui.purchases.PurchasesNews
-import com.dagteam.neurontesttask.view.ui.account.AccountNews
 import com.dagteam.neurontesttask.view.ui.registration.RegistrationNews
+import com.dagteam.neurontesttask.view.ui.registration.RegistrationScreen
+import com.dagteam.neurontesttask.view.ui.registration.RegistrationViewModel
 
 @Composable
 fun AppNavigation(
     navController: NavHostController = rememberNavController(),
     paddingValues: PaddingValues
 ) {
-    val application = LocalContext.current.applicationContext as NeuronApplication
-    
     NavHost(
         navController = navController,
         startDestination = Screen.Account.route
     ) {
         composable(Screen.Account.route) {
-            val viewModel: AccountViewModel = viewModel {
-                AccountViewModel(application.accountRepository)
-            }
+            val viewModel: AccountViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsState()
             
             LaunchedEffect(Unit) {
@@ -62,9 +56,7 @@ fun AppNavigation(
         }
         
         composable(Screen.Registration.route) {
-            val viewModel: RegistrationViewModel = viewModel {
-                RegistrationViewModel(application.accountRepository)
-            }
+            val viewModel: RegistrationViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsState()
             
             LaunchedEffect(Unit) {
@@ -87,9 +79,7 @@ fun AppNavigation(
         }
         
         composable(Screen.MyBuys.route) {
-            val viewModel: PurchasesViewModel = viewModel {
-                PurchasesViewModel(application.accountRepository)
-            }
+            val viewModel: PurchasesViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsState()
             
             LaunchedEffect(Unit) {

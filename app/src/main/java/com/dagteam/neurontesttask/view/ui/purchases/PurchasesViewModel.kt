@@ -4,22 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dagteam.neurontesttask.domain.GetMyBuysUseCase
 import com.dagteam.neurontesttask.domain.entities.Purchase
-import com.dagteam.neurontesttask.domain.repositories.AccountRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PurchasesViewModel(
-    private val accountRepository: AccountRepository
+@HiltViewModel
+class PurchasesViewModel @Inject constructor(
+    private val getMyBuysUseCase: GetMyBuysUseCase,
 ) : ViewModel() {
 
     private val _news = Channel<PurchasesNews>()
     val news = _news.receiveAsFlow()
-
-    private val getMyBuysUseCase = GetMyBuysUseCase(accountRepository)
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()

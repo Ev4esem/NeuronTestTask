@@ -7,8 +7,9 @@ import com.dagteam.neurontesttask.domain.entities.UserData
 import com.dagteam.neurontesttask.domain.repositories.AccountRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
 
-class AccountRepositoryImpl(
+class AccountRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val userDataStorage: UserDataStorage,
 ): AccountRepository {
