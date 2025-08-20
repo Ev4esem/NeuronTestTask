@@ -22,4 +22,11 @@
     <string name="registration_privacy_policy_text">Нажимая кнопку «Продолжить», я даю согласие на обработку персональных данных в соответствии с Политикой конфиденциальности</string>
     <string name="registration_continue_button">Продолжить</string>
     <string name="registration_incorrect_data_error">Некорректные данные</string>
+    
+    <!-- Purchases Screen -->
+    <string name="purchases_loading">Загрузка покупок...</string>
+    <string name="purchases_error_title">Произошла ошибка</string>
+    <string name="purchases_empty_title">Покупки не найдены</string>
+    <string name="purchases_empty_subtitle">Ваши покупки появятся здесь</string>
+    <string name="purchases_error_default">Не удалось загрузить покупки</string>
 </resources>
