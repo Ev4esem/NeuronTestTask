@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Purchase(
     val date: String,
-    val purchases: List<String>,
+    val name: List<String>,
 )

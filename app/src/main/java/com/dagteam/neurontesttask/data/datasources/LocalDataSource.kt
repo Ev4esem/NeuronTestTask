@@ -16,11 +16,10 @@ class LocalDataSource(private val context: Context) {
         return try {
             val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
             val container = json.decodeFromString<PurchasesDTO>(jsonString)
-
             container.data.map { item ->
                 Purchase(
                     date = DateFormatter.formatDate(item.date),
-                    purchases = item.purchases
+                    name = item.name
                 )
             }
         } catch (e: IOException) {

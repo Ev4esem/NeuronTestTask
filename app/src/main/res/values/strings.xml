@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">NeuronTestTask</string>
+    <string name="title_for_back_button">Назад</string>
+    <string name="title_my_buys">МОИ ПОКУПКИ</string>
+    <string name="title_settings">НАСТРОЙКИ</string>
+    <string name="title_for_card_email">E-mail</string>
+    <string name="title_for_card_enter_for_biometry">Вход по биометрии</string>
+    <string name="title_for_card_unnecessary_confirm_email">Необходимо подтвердить</string>
+    <string name="title_for_card_change_password">Сменить 4-х значный код</string>
+    <string name="title_for_card_registration_for_client_bank">Регистрация для клиентов банка</string>
+    <string name="title_for_card_language">Язык</string>
+    
+    <!-- Registration Screen -->
+    <string name="registration_participant_number_label">Номер из 16 цифр, который вы получили в банке</string>
+    <string name="registration_participant_number_placeholder">Номер участника</string>
+    <string name="registration_code_label">Код, который вы получили в банке</string>
+    <string name="registration_code_placeholder">Код</string>
+    <string name="registration_name_label">Имя (на латинице, как в загранпаспорте)</string>
+    <string name="registration_name_placeholder">Имя</string>
+    <string name="registration_surname_label">Фамилия (на латинице, как в загранпаспорте)</string>
+    <string name="registration_surname_placeholder">Фамилия</string>
+    <string name="registration_privacy_policy_text">Нажимая кнопку «Продолжить», я даю согласие на обработку персональных данных в соответствии с Политикой конфиденциальности</string>
+    <string name="registration_continue_button">Продолжить</string>
+    <string name="registration_incorrect_data_error">Некорректные данные</string>
 </resources>
