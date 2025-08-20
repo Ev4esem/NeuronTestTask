@@ -14,11 +14,17 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,7 +51,7 @@ fun RegistrationScreen(
         BackButton(
             onClick = { onIntent(RegistrationIntent.PressOnBack) }
         )
-        
+
         Text(
             text = stringResource(R.string.title_for_card_registration_for_client_bank),
             style = MaterialTheme.typography.headlineMedium,
@@ -54,14 +60,13 @@ fun RegistrationScreen(
             modifier = Modifier.padding(top = 16.dp)
         )
 
-        InputField(
-            value = formatCardNumber(uiState.participantNumber),
-            onValueChange = {
-                onIntent(RegistrationIntent.ChangeNumber(it))
+        CardNumberInputField(
+            digits = uiState.participantNumber,
+            onValueChange = { digits ->
+                onIntent(RegistrationIntent.ChangeNumber(digits))
             },
             label = stringResource(R.string.registration_participant_number_label),
             placeholder = stringResource(R.string.registration_participant_number_placeholder),
-            keyboardType = KeyboardType.Number,
             isError = !uiState.isParticipantNumberValid && uiState.participantNumber.isNotEmpty()
         )
 
@@ -118,6 +123,92 @@ fun RegistrationScreen(
 }
 
 @Composable
+private fun CardNumberInputField(
+    digits: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    placeholder: String,
+    modifier: Modifier = Modifier,
+    isError: Boolean = false
+) {
+    var textFieldValue by remember(digits) {
+        val formatted = formatCardNumber(digits)
+        mutableStateOf(
+            TextFieldValue(
+                text = formatted,
+                selection = TextRange(formatted.length)
+            )
+        )
+    }
+
+    InputField(
+        value = textFieldValue,
+        onValueChange = { newValue ->
+            val digitsOnly = newValue.text.filter { it.isDigit() }.take(16)
+            val formatted = formatCardNumber(digitsOnly)
+
+            textFieldValue = TextFieldValue(
+                text = formatted,
+                selection = TextRange(formatted.length)
+            )
+            onValueChange(digitsOnly)
+        },
+        label = label,
+        placeholder = placeholder,
+        modifier = modifier,
+        keyboardType = KeyboardType.Number,
+        isError = isError
+    )
+}
+
+@Composable
+private fun InputField(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    label: String,
+    placeholder: String,
+    modifier: Modifier = Modifier,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    isError: Boolean = false
+) {
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    color = Color.Gray
+                )
+            },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                focusedBorderColor = Color.Transparent,
+                unfocusedBorderColor = Color.Transparent,
+                cursorColor = Color.White,
+                errorTextColor = Color.Red,
+                errorBorderColor = Color.Red,
+                focusedContainerColor = CardColor,
+                unfocusedContainerColor = CardColor,
+                errorContainerColor = CardColor,
+            ),
+            shape = MaterialTheme.shapes.large,
+            isError = isError,
+            singleLine = true
+        )
+        Text(
+            text = if(isError) stringResource(R.string.registration_incorrect_data_error) else label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = if(isError) Color.Red else Color.Gray,
+            modifier = Modifier.padding(top = 4.dp)
+        )
+    }
+}
+
+@Composable
 private fun InputField(
     value: String,
     onValueChange: (String) -> Unit,
@@ -150,7 +241,6 @@ private fun InputField(
                 focusedContainerColor = CardColor,
                 unfocusedContainerColor = CardColor,
                 errorContainerColor = CardColor,
-
             ),
             shape = MaterialTheme.shapes.large,
             isError = isError,

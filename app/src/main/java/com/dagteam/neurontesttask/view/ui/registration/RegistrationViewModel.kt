@@ -51,8 +51,7 @@ class RegistrationViewModel @Inject constructor(
             }
 
             is RegistrationIntent.ChangeNumber -> {
-                val digits = intent.number.replace(" ", "").take(16)
-                updateState { it.copy(participantNumber = digits) }
+                updateState { it.copy(participantNumber = intent.number) }
             }
 
             is RegistrationIntent.PressOnContinue -> {
